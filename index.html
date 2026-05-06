@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wrote This Instead — P</title>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Playfair+Display:ital,wght@0,400;1,300;1,400&family=EB+Garamond:ital,wght@0,400;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper:   #F2EBD9;
+  --paper2:  #EDE4CF;
+  --paper3:  #E5DABE;
+  --ink:     #1C1710;
+  --ink2:    #3A3020;
+  --ink3:    #6A5E48;
+  --ink4:    #9A8E78;
+  --red:     #B84040;
+  --red-dim: #8A2A2A;
+  --stamp:   #7A4A28;
+  --border:  rgba(28,23,16,0.12);
+  --border2: rgba(28,23,16,0.07);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+
+body{
+  background:var(--paper3);
+  color:var(--ink);
+  font-family:'EB Garamond',serif;
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* GRAIN — the whole page */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.68' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.09'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:9000;opacity:1;
+}
+
+/* CURSOR */
+.cursor-dot{
+  width:6px;height:6px;
+  background:var(--red);
+  border-radius:50%;
+  position:fixed;top:0;left:0;
+  pointer-events:none;z-index:9999;
+  transform:translate(-50%,-50%);
+}
+.cursor-ring{
+  width:26px;height:26px;
+  border:1px solid rgba(184,64,64,0.35);
+  border-radius:50%;
+  position:fixed;top:0;left:0;
+  pointer-events:none;z-index:9998;
+  transform:translate(-50%,-50%);
+  transition:width 0.2s,height 0.2s,border-color 0.2s;
+}
+.cursor-ring.hov{
+  width:36px;height:36px;
+  border-color:rgba(184,64,64,0.6);
+}
+
+/* PROGRESS */
+.progress{
+  position:fixed;top:0;left:0;
+  height:2px;
+  background:repeating-linear-gradient(90deg,var(--red) 0px,var(--red) 6px,transparent 6px,transparent 10px);
+  z-index:8000;width:0%;
+  transition:width 0.08s;
+}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;
+  z-index:7000;
+  padding:1rem 2.5rem;
+  display:flex;justify-content:space-between;align-items:center;
+  background:linear-gradient(to bottom,rgba(242,235,217,0.97),transparent);
+  border-bottom:1px solid transparent;
+}
+.nav-logo{
+  font-family:'Special Elite',cursive;
+  font-size:13px;
+  color:var(--ink3);
+  letter-spacing:0.05em;
+}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{
+  font-family:'DM Mono',monospace;
+  font-size:8px;letter-spacing:0.18em;
+  color:var(--ink4);text-decoration:none;
+  text-transform:uppercase;transition:color 0.2s;
+}
+.nav-links a:hover{color:var(--red)}
+
+/* ===================== HERO ===================== */
+.hero{
+  min-height:100vh;
+  background:var(--paper);
+  display:flex;flex-direction:column;
+  justify-content:center;align-items:center;
+  text-align:center;
+  position:relative;overflow:hidden;
+  padding:8rem 2rem 4rem;
+}
+
+/* ruled lines like notebook paper */
+.hero-ruled{
+  position:absolute;inset:0;pointer-events:none;
+  background-image:repeating-linear-gradient(
+    to bottom,
+    transparent 0px,transparent 31px,
+    rgba(28,23,16,0.06) 31px,rgba(28,23,16,0.06) 32px
+  );
+}
+/* red margin line */
+.hero-margin{
+  position:absolute;
+  top:0;bottom:0;left:14%;
+  width:1px;
+  background:rgba(184,64,64,0.2);
+  pointer-events:none;
+}
+
+/* torn top edge effect */
+.hero-torn{
+  position:absolute;top:0;left:0;right:0;
+  height:18px;
+  background:var(--paper);
+  clip-path:polygon(0 0,2% 100%,4% 40%,6% 90%,8% 20%,10% 80%,12% 30%,14% 70%,16% 10%,18% 60%,20% 25%,22% 75%,24% 15%,26% 65%,28% 35%,30% 85%,32% 20%,34% 70%,36% 40%,38% 90%,40% 10%,42% 55%,44% 80%,46% 25%,48% 65%,50% 30%,52% 80%,54% 15%,56% 60%,58% 35%,60% 85%,62% 20%,64% 70%,66% 40%,68% 90%,70% 25%,72% 65%,74% 10%,76% 55%,78% 80%,80% 30%,82% 75%,84% 15%,86% 60%,88% 35%,90% 85%,92% 20%,94% 70%,96% 40%,98% 90%,100% 0);
+  z-index:3;
+}
+
+/* tape strip across top */
+.tape{
+  position:absolute;
+  height:28px;
+  background:rgba(212,196,160,0.45);
+  border-top:0.5px solid rgba(28,23,16,0.08);
+  border-bottom:0.5px solid rgba(28,23,16,0.08);
+  transform:rotate(-1.5deg);
+  pointer-events:none;
+  z-index:4;
+}
+.tape-1{width:120px;top:3.5rem;left:calc(50% - 60px)}
+
+/* stamp-like date mark */
+.stamp{
+  position:absolute;
+  font-family:'Special Elite',cursive;
+  font-size:9px;
+  color:rgba(122,74,40,0.35);
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  border:1px solid rgba(122,74,40,0.2);
+  padding:4px 10px;
+  transform:rotate(-8deg);
+  pointer-events:none;
+  z-index:4;
+}
+.stamp-1{top:5rem;right:8%}
+
+/* scribble underline svg */
+.scribble{
+  display:block;
+  width:100%;
+  overflow:visible;
+  pointer-events:none;
+}
+
+.hero-content{
+  position:relative;z-index:5;
+  display:flex;flex-direction:column;
+  align-items:center;max-width:600px;
+}
+
+.hero-label{
+  font-family:'DM Mono',monospace;
+  font-size:8px;letter-spacing:0.28em;
+  color:var(--ink4);text-transform:uppercase;
+  margin-bottom:1.8rem;
+  animation:fadeUp 1s ease 0.2s both;
+}
+
+.hero-title{
+  font-family:'Special Elite',cursive;
+  font-size:clamp(2.8rem,9vw,6.5rem);
+  color:var(--ink);
+  line-height:1.05;
+  letter-spacing:-0.01em;
+  position:relative;
+  animation:fadeUp 1.2s ease 0.35s both;
+}
+.hero-title .line2{
+  display:block;
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-weight:300;
+  font-size:0.5em;
+  color:var(--red);
+  letter-spacing:0.14em;
+  margin-top:0.1em;
+}
+
+/* hand-drawn underline */
+.hero-underline{
+  margin:0.4rem auto 0;
+  animation:fadeUp 1s ease 0.6s both;
+}
+
+.hero-hook{
+  font-family:'EB Garamond',serif;
+  font-style:italic;
+  font-size:clamp(1rem,2.5vw,1.3rem);
+  color:var(--ink3);
+  line-height:1.8;
+  margin-top:1.8rem;
+  max-width:420px;
+  animation:fadeUp 1s ease 0.7s both;
+}
+.hero-hook em{font-style:normal;color:var(--red)}
+
+.hero-byline{
+  font-family:'DM Mono',monospace;
+  font-size:8px;letter-spacing:0.22em;
+  color:var(--ink4);text-transform:uppercase;
+  margin-top:2rem;
+  animation:fadeIn 1s ease 1.1s both;
+}
+
+/* floating side notes — like margin scribbles */
+.margin-note{
+  position:absolute;z-index:4;
+  font-family:'Special Elite',cursive;
+  font-size:clamp(0.6rem,1.5vw,0.75rem);
+  color:var(--ink4);
+  line-height:1.7;
+  max-width:130px;
+}
+.mn-l{left:3%;top:50%;transform:translateY(-50%) rotate(-2deg);text-align:left;animation:fadeIn 1.2s ease 1.3s both}
+.mn-r{right:3%;top:45%;transform:translateY(-50%) rotate(1.5deg);text-align:right;animation:fadeIn 1.2s ease 1.5s both}
+
+.scroll-hint{
+  position:absolute;bottom:2.5rem;left:50%;
+  transform:translateX(-50%);
+  font-family:'DM Mono',monospace;
+  font-size:8px;letter-spacing:0.25em;
+  color:var(--ink4);text-transform:uppercase;
+  display:flex;flex-direction:column;align-items:center;gap:0.8rem;
+  animation:fadeIn 1s ease 1.8s both;z-index:5;
+}
+.scroll-line{
+  width:1px;height:40px;
+  background:linear-gradient(to bottom,var(--ink3),transparent);
+  animation:scrollPulse 2.5s ease-in-out infinite;
+}
+@keyframes scrollPulse{
+  0%,100%{opacity:0.2;transform:scaleY(0.85)}
+  50%{opacity:0.7;transform:scaleY(1.1)}
+}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes fadeIn{
+  from{opacity:0}to{opacity:1}
+}
+
+/* ===================== DIVIDER ===================== */
+.zine-rule{
+  border:none;height:0;
+  border-top:1.5px dashed rgba(28,23,16,0.12);
+  margin:0;
+}
+
+/* ===================== PREFACE ===================== */
+.preface-section{
+  padding:7rem 0 6rem;
+  background:var(--paper);
+  position:relative;
+}
+.preface-inner{max-width:600px;margin:0 auto;padding:0 2rem}
+.section-label{
+  font-family:'Special Elite',cursive;
+  font-size:11px;letter-spacing:0.15em;
+  color:var(--red);text-transform:uppercase;
+  margin-bottom:2rem;
+  display:flex;align-items:center;gap:1rem;
+}
+.section-label::after{
+  content:'';flex:1;height:1px;
+  background:linear-gradient(to right,rgba(184,64,64,0.25),transparent);
+}
+.preface-body{
+  font-size:1.15rem;line-height:2.05;
+  color:var(--ink2);font-weight:400;
+}
+.preface-body p{margin-bottom:1.3rem}
+.preface-body em{color:var(--red);font-style:italic}
+.preface-sign{
+  font-family:'Special Elite',cursive;
+  font-size:1rem;color:var(--ink3);
+  margin-top:1.5rem;
+}
+
+/* ===================== TOC ===================== */
+.toc-section{
+  padding:4rem 0 5rem;
+  background:var(--paper2);
+  position:relative;
+}
+.toc-inner{max-width:700px;margin:0 auto;padding:0 2rem}
+.toc-heading{
+  font-family:'Special Elite',cursive;
+  font-size:clamp(1.6rem,4vw,2.8rem);
+  color:var(--ink);margin-bottom:2.5rem;
+  letter-spacing:-0.01em;
+}
+.toc-heading span{color:var(--red)}
+.toc-grid{
+  display:grid;grid-template-columns:repeat(7,1fr);
+  border:1.5px solid rgba(28,23,16,0.12);
+  background:var(--paper);
+}
+.toc-item{
+  padding:1.2rem 0.6rem;
+  border-right:1px solid rgba(28,23,16,0.08);
+  cursor:pointer;
+  transition:background 0.2s;
+  text-align:center;
+}
+.toc-item:last-child{border-right:none}
+.toc-item:hover{background:rgba(184,64,64,0.06)}
+.toc-num{
+  font-family:'Special Elite',cursive;
+  font-size:1.3rem;color:rgba(184,64,64,0.35);
+  line-height:1;margin-bottom:0.4rem;
+  transition:color 0.2s;
+}
+.toc-word{
+  font-family:'DM Mono',monospace;
+  font-size:7px;letter-spacing:0.1em;
+  color:var(--ink4);text-transform:uppercase;
+  display:block;transition:color 0.2s;
+  line-height:1.4;
+}
+.toc-item:hover .toc-num{color:var(--red)}
+.toc-item:hover .toc-word{color:var(--ink3)}
+
+/* ===================== POEM SECTIONS ===================== */
+.poem-section{
+  padding:7rem 0;position:relative;overflow:hidden;
+}
+.poem-section:nth-child(odd){background:var(--paper)}
+.poem-section:nth-child(even){background:var(--paper2)}
+
+.poem-bg-num{
+  position:absolute;
+  font-family:'Special Elite',cursive;
+  font-size:clamp(12rem,26vw,22rem);
+  color:transparent;
+  -webkit-text-stroke:1px rgba(28,23,16,0.04);
+  line-height:1;pointer-events:none;user-select:none;z-index:0;
+  top:50%;transform:translateY(-50%);
+}
+.poem-bg-num.r{right:-2rem}
+.poem-bg-num.l{left:-2rem}
+
+.poem-inner{
+  max-width:700px;margin:0 auto;
+  padding:0 3rem;position:relative;z-index:2;
+}
+
+/* poem header */
+.poem-num{
+  font-family:'DM Mono',monospace;
+  font-size:8px;letter-spacing:0.22em;
+  color:var(--ink4);text-transform:uppercase;
+  margin-bottom:0.5rem;
+}
+.poem-title{
+  font-family:'Special Elite',cursive;
+  font-size:clamp(1.6rem,4.5vw,2.8rem);
+  color:var(--ink);line-height:1.1;
+  margin-bottom:0.3rem;
+}
+.poem-sub{
+  font-family:'EB Garamond',serif;
+  font-style:italic;font-size:1rem;
+  color:var(--ink3);margin-bottom:1.8rem;
+}
+
+/* casual intro note */
+.poem-note{
+  margin-bottom:1.8rem;
+  padding:1rem 1.2rem;
+  background:rgba(28,23,16,0.03);
+  border-left:2.5px solid rgba(184,64,64,0.3);
+  position:relative;
+}
+.poem-note::before{
+  content:'note —';
+  font-family:'DM Mono',monospace;
+  font-size:7.5px;letter-spacing:0.18em;
+  color:var(--red);text-transform:uppercase;
+  display:block;margin-bottom:0.4rem;
+}
+.poem-note p{
+  font-family:'EB Garamond',serif;
+  font-style:italic;font-size:1rem;
+  line-height:1.8;color:var(--ink3);
+}
+
+/* poem body */
+.poem-text{
+  font-family:'EB Garamond',serif;
+  font-size:1.1rem;line-height:2.1;
+  white-space:pre-wrap;color:var(--ink);
+  font-weight:400;
+  margin:1.5rem 0;
+  padding:1.8rem 0;
+  border-top:1px dashed rgba(28,23,16,0.1);
+  border-bottom:1px dashed rgba(28,23,16,0.1);
+}
+
+/* expand buttons */
+.poem-btns{display:flex;gap:0.6rem;flex-wrap:wrap;margin-top:1.2rem}
+.pbtn{
+  font-family:'DM Mono',monospace;
+  font-size:7.5px;letter-spacing:0.13em;
+  text-transform:uppercase;background:none;
+  border:1px solid rgba(28,23,16,0.15);
+  color:var(--ink4);padding:6px 12px;
+  cursor:none;transition:all 0.2s;
+}
+.pbtn:hover{border-color:rgba(184,64,64,0.35);color:var(--red);background:rgba(184,64,64,0.04)}
+.expanel{
+  display:none;margin-top:1rem;
+  padding:1.2rem 1.4rem;
+  background:rgba(28,23,16,0.03);
+  border:1px dashed rgba(28,23,16,0.1);
+}
+.expanel .ep-label{
+  font-family:'DM Mono',monospace;
+  font-size:7.5px;letter-spacing:0.16em;
+  text-transform:uppercase;color:var(--red);
+  margin-bottom:0.6rem;
+}
+.expanel p{
+  font-family:'EB Garamond',serif;
+  font-style:italic;font-size:1rem;
+  line-height:1.85;color:var(--ink2);
+}
+
+/* poem dividers — scissor-cut look */
+.poem-divider{
+  height:1px;
+  background:repeating-linear-gradient(90deg,rgba(28,23,16,0.1) 0,rgba(28,23,16,0.1) 5px,transparent 5px,transparent 10px);
+  position:relative;
+}
+.poem-divider::after{
+  content:attr(data-label);
+  position:absolute;left:50%;top:50%;
+  transform:translate(-50%,-50%);
+  font-family:'DM Mono',monospace;
+  font-size:7.5px;letter-spacing:0.18em;
+  color:var(--ink4);
+  background:var(--paper2);
+  padding:0 0.8rem;text-transform:uppercase;
+}
+
+/* ===================== FINALE ===================== */
+.finale{
+  min-height:65vh;
+  display:flex;flex-direction:column;
+  justify-content:center;align-items:center;
+  text-align:center;padding:7rem 2rem;
+  background:var(--paper);position:relative;overflow:hidden;
+}
+.finale-ghost{
+  position:absolute;
+  font-family:'Special Elite',cursive;
+  font-size:clamp(10rem,22vw,18rem);
+  color:transparent;
+  -webkit-text-stroke:1px rgba(28,23,16,0.04);
+  user-select:none;pointer-events:none;
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  white-space:nowrap;
+}
+.finale-inner{position:relative;z-index:2;max-width:500px}
+.finale-line{
+  font-family:'EB Garamond',serif;
+  font-style:italic;
+  font-size:clamp(1rem,2.5vw,1.5rem);
+  color:var(--ink2);line-height:1.9;
+}
+.finale-line.big{
+  font-family:'Special Elite',cursive;
+  font-style:normal;
+  font-size:clamp(1.3rem,3.5vw,2rem);
+  color:var(--ink);margin:0.8rem 0;
+}
+.finale-line.red{color:var(--red)}
+.finale-credit{
+  margin-top:3rem;
+  font-family:'DM Mono',monospace;
+  font-size:8px;letter-spacing:0.2em;
+  color:var(--ink4);text-transform:uppercase;
+  position:relative;z-index:2;
+}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.8s ease,transform 0.8s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.rd1{transition-delay:0.1s}.rd2{transition-delay:0.24s}.rd3{transition-delay:0.4s}
+
+@media(max-width:700px){
+  nav{padding:0.8rem 1.2rem}.nav-links{display:none}
+  .poem-inner{padding:0 1.4rem}
+  .toc-grid{grid-template-columns:repeat(4,1fr)}
+  .toc-item:nth-child(n+5){border-top:1px solid rgba(28,23,16,0.08)}
+  .margin-note{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor-dot" id="cursor-dot"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<div class="progress" id="progress"></div>
+
+<nav>
+  <div class="nav-logo">wrote this instead</div>
+  <ul class="nav-links">
+    <li><a href="#preface">intro</a></li>
+    <li><a href="#toc">poems</a></li>
+    <li><a href="#poem-1">read</a></li>
+    <li><a href="#finale">the end</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-ruled"></div>
+  <div class="hero-margin"></div>
+  <div class="hero-torn"></div>
+  <div class="tape tape-1"></div>
+  <div class="stamp stamp-1">2026</div>
+
+  <div class="margin-note mn-l">"low battery<br>but still kind<br>of cute"<br>— poem i</div>
+  <div class="margin-note mn-r">"even my chaos<br>is trying<br>to be fine"<br>— poem vii</div>
+
+  <div class="hero-content">
+    <div class="hero-label">a poetry collection</div>
+    <div class="hero-title">
+      wrote this
+      <span class="line2">instead</span>
+    </div>
+
+    <!-- hand-drawn scribble underline -->
+    <svg class="hero-underline" viewBox="0 0 300 12" width="260" height="12" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 8 C30 4, 60 10, 90 7 C120 4, 150 9, 180 6 C210 3, 240 9, 270 7 C280 6, 290 7, 296 8" stroke="#B84040" stroke-width="1.8" stroke-linecap="round" opacity="0.5"/>
+      <path d="M10 10 C50 8, 100 11, 150 9 C200 7, 250 10, 292 9" stroke="#B84040" stroke-width="0.8" stroke-linecap="round" opacity="0.25"/>
+    </svg>
+
+    <div class="hero-hook">
+      seven poems. a lot of feelings.<br>
+      one very patient <em>notes app.</em>
+    </div>
+    <div class="hero-byline">Pulkit Chhabra &nbsp;·&nbsp; seven poems &nbsp;·&nbsp; no map</div>
+  </div>
+
+  <div class="scroll-hint">
+    <span>scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<hr class="zine-rule">
+
+<!-- PREFACE -->
+<section class="preface-section" id="preface">
+  <div class="preface-inner">
+    <div class="section-label reveal">intro</div>
+    <div class="preface-body reveal rd1">
+      <p>okay so. I wrote some poems.</p>
+      <p>not because I planned to — they kept showing up while I was supposed to be doing other things. studying, mostly. occasionally staring at the ceiling. once while watching a bird outside my window for way too long.</p>
+      <p>they're about having a lot of feelings and not always knowing what to do with them. the chaos of wanting too much. a stranger who made me smile for no reason. love showing up mid-sentence like it owns the place.</p>
+      <p><em>pretty normal stuff, honestly.</em></p>
+      <p>I put them here because they felt too big for my notes app. read them in order or don't — either works. hope something hits.</p>
+      <div class="preface-sign">— Pulkit Chhabra</div>
+    </div>
+  </div>
+</section>
+
+<hr class="zine-rule">
+
+<!-- TOC -->
+<section class="toc-section" id="toc">
+  <div class="toc-inner">
+    <div class="toc-heading reveal">what's <span>inside</span></div>
+    <div class="toc-grid reveal rd1">
+      <div class="toc-item" onclick="go(1)"><div class="toc-num">i</div><span class="toc-word">the rush</span></div>
+      <div class="toc-item" onclick="go(2)"><div class="toc-num">ii</div><span class="toc-word">who am i</span></div>
+      <div class="toc-item" onclick="go(3)"><div class="toc-num">iii</div><span class="toc-word">winning</span></div>
+      <div class="toc-item" onclick="go(4)"><div class="toc-num">iv</div><span class="toc-word">the bird</span></div>
+      <div class="toc-item" onclick="go(5)"><div class="toc-num">v</div><span class="toc-word">hope</span></div>
+      <div class="toc-item" onclick="go(6)"><div class="toc-num">vi</div><span class="toc-word">love??</span></div>
+      <div class="toc-item" onclick="go(7)"><div class="toc-num">vii</div><span class="toc-word">the moon</span></div>
+    </div>
+  </div>
+</section>
+
+<hr class="zine-rule">
+
+<!-- POEM I -->
+<section class="poem-section" id="poem-1">
+  <div class="poem-bg-num r" aria-hidden="true">i</div>
+  <div class="poem-inner">
+    <div class="reveal">
+      <div class="poem-num">poem i &nbsp;·&nbsp; the rush</div>
+      <div class="poem-title">The Speed of Things</div>
+      <div class="poem-sub">life said "keep up" and I said "wait what"</div>
+    </div>
+    <div class="poem-note reveal rd1">
+      <p>wrote this on a day when everything felt like it was moving and I was somehow standing still. headphones in, world on mute. you know the feeling.</p>
+    </div>
+    <div class="poem-text reveal rd2">Life's moving fast,
+I feel my heart stuck in slow-mo.
+All the things that once made sense —
+now I'm like… wait, was that a no-go?
+
+Things that felt simple and fun
+now chase me like I owe them money in this run.
+
+A boy finds peace in songs,
+sings along just to feel he belongs.
+Headphones in, world on mute,
+low battery — but still kind of cute.
+
+Reality hits. No warning. No crown.
+Just shows up one day and sits you down.
+The leaves have slowly started to brown,
+even the sky feels a little less town.
+
+Life moves on,
+hands out wings, says "fly high."
+But sometimes it's fine to just sit… and cry.
+
+And somehow, between the chaos and the plea,
+life starts making a little sense to me —
+not perfect, not whole, not fully free…
+but enough to finally just… be.</div>
+    <div class="poem-btns reveal rd3">
+      <button class="pbtn" onclick="ep('i-head')">the headphones thing</button>
+      <button class="pbtn" onclick="ep('i-low')">"low battery but still kind of cute"</button>
+    </div>
+    <div class="expanel" id="i-head">
+      <div class="ep-label">the headphones thing</div>
+      <p>headphones in, world on mute — that's not escapism, that's survival. three-minute songs where everything feels manageable. we all have a version of this.</p>
+    </div>
+    <div class="expanel" id="i-low">
+      <div class="ep-label">on one line</div>
+      <p>honestly the most me line in the whole collection. running on empty but still showing up. that's the vibe.</p>
+    </div>
+  </div>
+</section>
+
+<div class="poem-divider" data-label="✂ · · ·"></div>
+
+<!-- POEM II -->
+<section class="poem-section" id="poem-2">
+  <div class="poem-bg-num l" aria-hidden="true">ii</div>
+  <div class="poem-inner">
+    <div class="reveal">
+      <div class="poem-num">poem ii &nbsp;·&nbsp; who am i</div>
+      <div class="poem-title">Diamond and Dust</div>
+      <div class="poem-sub">my mom's softness, my dad's sharpness, and me somewhere in between</div>
+    </div>
+    <div class="poem-note reveal rd1">
+      <p>this one got personal fast. I didn't plan to write about my parents but here we are. the "orphan answers" line is my favourite thing I've ever written, not gonna lie.</p>
+    </div>
+    <div class="poem-text reveal rd2">I found a life — almost here, almost whole,
+just cooking under the fire of ambitions.
+There are questions unanswered.
+There are days in trouble,
+feels like I'm living in a bubble
+on the verge of bursting.
+
+It's made of diamond crystals,
+baked under heat and pressure.
+
+I'm soft inside, with emotions from my mother,
+and sharp outside, shaped by my father's wisdom.
+
+Life sometimes gets boring —
+but maybe that's fine.
+His ambitions are high,
+he believes he can fly.
+The sky felt low,
+so he aimed for space.
+
+Fascinated by the mysteries of the universe,
+he had some questions
+and some orphan answers —
+so he just put it all in a verse.</div>
+    <div class="poem-btns reveal rd3">
+      <button class="pbtn" onclick="ep('ii-orph')">"orphan answers"</button>
+      <button class="pbtn" onclick="ep('ii-shift')">the I → he thing</button>
+    </div>
+    <div class="expanel" id="ii-orph">
+      <div class="ep-label">orphan answers</div>
+      <p>answers that exist but don't have a question yet. or questions that lost their answer somewhere. I think that's just what it feels like to be curious and unfinished.</p>
+    </div>
+    <div class="expanel" id="ii-shift">
+      <div class="ep-label">why "he" halfway through</div>
+      <p>switched to "he" because "I" felt too close. sometimes you need a little distance to look at yourself honestly.</p>
+    </div>
+  </div>
+</section>
+
+<div class="poem-divider" data-label="✂ · · ·"></div>
+
+<!-- POEM III -->
+<section class="poem-section" id="poem-3">
+  <div class="poem-bg-num r" aria-hidden="true">iii</div>
+  <div class="poem-inner">
+    <div class="reveal">
+      <div class="poem-num">poem iii &nbsp;·&nbsp; winning</div>
+      <div class="poem-title">The Boy at the Top</div>
+      <div class="poem-sub">what if you win and it feels weird</div>
+    </div>
+    <div class="poem-note reveal rd1">
+      <p>started as a poem about ambition. ended up being about the strange silence when you get what you wanted. the "well played" ending kind of ruined me.</p>
+    </div>
+    <div class="poem-text reveal rd2">One… Two… Three… Go.
+The race began with a blasting blow —
+every face wore a divine glow.
+Tiny feet with hopes so stunning,
+innocent minds… yet already running.
+
+Years rolled by, the crowd grew wide,
+big fat lies ran side by side.
+Dreams were loud, the truth was humming —
+still they never stopped their running.
+
+Then the road split — he found two ways,
+and he had dreams to chase.
+He paused a moment, his courage numbing,
+he cried… he tried… then stopped becoming.
+
+But he made a choice and rose again —
+not out of pressure, not for acclaim.
+He walked his path in his own sure way,
+and Shakespeare echoed loud that day —
+"to unpathed waters, undreamed shores" —
+and he knew he wasn't running chores.
+He wasn't racing for crowns or scores.
+He was running to become… something more.
+
+And then he was there — the long-dreamed top,
+yet silence hit harder than any drop.
+Maybe he'd won. Maybe he was done.
+But he felt he'd lost the boy he'd begun.
+
+He stood alone in the thinning air,
+realized life was never fair.
+He was amazed.
+He had changed.
+And everyone just said — "well played."</div>
+    <div class="poem-btns reveal rd3">
+      <button class="pbtn" onclick="ep('iii-wp')">"well played"</button>
+      <button class="pbtn" onclick="ep('iii-boy')">the boy he'd begun</button>
+    </div>
+    <div class="expanel" id="iii-wp">
+      <div class="ep-label">well played</div>
+      <p>two words. everyone claps. no one asks if you're okay. that's the whole poem in a caption.</p>
+    </div>
+    <div class="expanel" id="iii-boy">
+      <div class="ep-label">what was lost</div>
+      <p>the scariest part of growing up isn't failing. it's succeeding and not recognising yourself anymore.</p>
+    </div>
+  </div>
+</section>
+
+<div class="poem-divider" data-label="✂ · · ·"></div>
+
+<!-- POEM IV -->
+<section class="poem-section" id="poem-4">
+  <div class="poem-bg-num l" aria-hidden="true">iv</div>
+  <div class="poem-inner">
+    <div class="reveal">
+      <div class="poem-num">poem iv &nbsp;·&nbsp; the bird</div>
+      <div class="poem-title">The Bird I Watched Instead</div>
+      <div class="poem-sub">I was supposed to be studying</div>
+    </div>
+    <div class="poem-note reveal rd1">
+      <p>literally watched a bird from my window for like 20 minutes one afternoon. wrote this instead of doing what I was supposed to. zero regrets.</p>
+    </div>
+    <div class="poem-text reveal rd2">The bird is alone in the open sky —
+not lonely, just singular.
+It cuts through the blue like a thought
+you didn't know you were having.
+
+First flight or hundredth —
+it doesn't matter.
+Every rise through soft and shining clouds
+is a new country.
+Fear visits sometimes,
+but adventure never leaves.
+
+The view from up there must be surreal —
+or maybe that's just what I tell myself
+looking up from down here,
+wondering if any of it is real,
+or just a beautiful hallucination
+I've been granted on a slow afternoon.
+
+Whatever it is — never mind.
+My mind has found its rhyme.</div>
+    <div class="poem-btns reveal rd3">
+      <button class="pbtn" onclick="ep('iv-env')">why a bird</button>
+      <button class="pbtn" onclick="ep('iv-nm')">"never mind"</button>
+    </div>
+    <div class="expanel" id="iv-env">
+      <div class="ep-label">why a bird</div>
+      <p>it had nowhere to be. no deadlines. no expectations. I was jealous of a bird. that felt worth writing about.</p>
+    </div>
+    <div class="expanel" id="iv-nm">
+      <div class="ep-label">the ending</div>
+      <p>not giving up. just — some things are beautiful and unexplainable and that's enough. you don't need to solve everything.</p>
+    </div>
+  </div>
+</section>
+
+<div class="poem-divider" data-label="✂ · · ·"></div>
+
+<!-- POEM V -->
+<section class="poem-section" id="poem-5">
+  <div class="poem-bg-num r" aria-hidden="true">v</div>
+  <div class="poem-inner">
+    <div class="reveal">
+      <div class="poem-num">poem v &nbsp;·&nbsp; hope</div>
+      <div class="poem-title">The Stranger at Seven</div>
+      <div class="poem-sub">one person, one moment, somehow enough</div>
+    </div>
+    <div class="poem-note reveal rd1">
+      <p>this actually happened. I was having a rough day, saw someone walking by, felt weirdly better. couldn't explain it so I wrote it instead.</p>
+    </div>
+    <div class="poem-text reveal rd2">I was going down the lane
+with a heart full of something heavy —
+then I saw a candle in the ordinary dark.
+
+She was just a person passing through,
+and it was almost seven —
+that hour when the light goes golden
+and everything feels like it might mean something.
+
+There was a softness in her eyes,
+a stillness in the way she moved —
+something that felt, for a moment,
+like the world remembered how to be good.
+
+I smiled then.
+Not at her — at the proof of her.
+I dared to walk that extra mile.
+And there was a silver line ahead,
+waiting quiet, waiting patient,
+for its share of sunshine.
+
+She was a flame of hope —
+lit not to last, but to remind me
+there's nothing I cannot cope.</div>
+    <div class="poem-btns reveal rd3">
+      <button class="pbtn" onclick="ep('v-proof')">"not at her — at the proof of her"</button>
+      <button class="pbtn" onclick="ep('v-seven')">almost seven</button>
+    </div>
+    <div class="expanel" id="v-proof">
+      <div class="ep-label">that line</div>
+      <p>she didn't do anything. she just existed, kindly, at the right moment. and that was evidence that the world still had good things in it.</p>
+    </div>
+    <div class="expanel" id="v-seven">
+      <div class="ep-label">almost seven</div>
+      <p>that golden hour light thing is real. everything feels like it might mean something at almost seven.</p>
+    </div>
+  </div>
+</section>
+
+<div class="poem-divider" data-label="✂ · · ·"></div>
+
+<!-- POEM VI -->
+<section class="poem-section" id="poem-6">
+  <div class="poem-bg-num l" aria-hidden="true">vi</div>
+  <div class="poem-inner">
+    <div class="reveal">
+      <div class="poem-num">poem vi &nbsp;·&nbsp; love??</div>
+      <div class="poem-title">What's Love? (I Wasn't Supposed to Write This)</div>
+      <div class="poem-sub">I was literally just sitting there</div>
+    </div>
+    <div class="poem-note reveal rd1">
+      <p>I genuinely don't know how this poem happened. I was studying. then suddenly I was writing about love. mid-poem I even asked myself what was going on. kept it in.</p>
+    </div>
+    <div class="poem-text reveal rd2">What's love?
+An emotion,
+a notion,
+or just attraction
+lost in the chase of perfection?
+
+No one's perfect, no one's ideal —
+we all got scars that never fully heal.
+I had my flaws, my reckless laws,
+yet still they loved me — just because.
+
+Love is acceptance, sometimes demand.
+It's knowing their little "kaand."
+
+It's comfortable, it's easy.
+Sometimes silly, sometimes cheesy.
+It's being you, unapologetically true —
+and being the one in their point of view.
+
+It's butterflies dancing, a spark in the air,
+like flowers deciding to bloom everywhere.
+From roses to poses, to promises and pauses —
+those 3 a.m. calls.
+Those collective goals.
+
+But —
+wait a second… what got me here?
+Why am I writing about love so clear?
+I don't even know — just vibing, just chilling,
+studying, sitting… then words started spilling.
+
+What's love?
+Maybe it's exactly this —
+words that arrive before you know you're missing something.</div>
+    <div class="poem-btns reveal rd3">
+      <button class="pbtn" onclick="ep('vi-wall')">"wait what got me here"</button>
+      <button class="pbtn" onclick="ep('vi-end')">the last line</button>
+    </div>
+    <div class="expanel" id="vi-wall">
+      <div class="ep-label">the mid-poem crisis</div>
+      <p>the most honest moment in the collection. the poem catching itself mid-thought. I kept it in because it felt too real to cut.</p>
+    </div>
+    <div class="expanel" id="vi-end">
+      <div class="ep-label">words that arrive before you know you're missing something</div>
+      <p>that's love. that's also poetry. didn't plan that — it just landed that way.</p>
+    </div>
+  </div>
+</section>
+
+<div class="poem-divider" data-label="✂ · · ·"></div>
+
+<!-- POEM VII -->
+<section class="poem-section" id="poem-7">
+  <div class="poem-bg-num r" aria-hidden="true">vii</div>
+  <div class="poem-inner">
+    <div class="reveal">
+      <div class="poem-num">poem vii &nbsp;·&nbsp; the moon</div>
+      <div class="poem-title">The Moon Doesn't Apologize for Its Scars</div>
+      <div class="poem-sub">the one where everything kind of makes sense</div>
+    </div>
+    <div class="poem-note reveal rd1">
+      <p>last poem. wrote it late at night. the moon was actually out. felt right to end here — not with answers, just with the moon doing its thing, scars and all.</p>
+    </div>
+    <div class="poem-text reveal rd2">It's me,
+
+sitting in my room,
+at my table,
+with a list so long it could stretch to the moon.
+
+Exams are near —
+they're loud in my ear,
+but somehow I'm drifting,
+not moving from here.
+
+They call it delulu,
+lost in some fantasy view,
+but maybe it's solulu
+for dreams that feel trulu.
+
+I know I belong somewhere —
+not here, not nowhere.
+There's light in the distance.
+I feel it out there.
+
+But books keep staring,
+deadlines declaring:
+"prepare for your future"
+like I'm not already caring.
+
+I say I'm fine.
+Every single time.
+Would it be my crime
+if I crossed that line?
+If I paused the race,
+just slowed the pace,
+and let my thoughts
+breathe in their own space?
+
+The music is on,
+and my worries are gone —
+for three-minute songs
+I feel kind of strong.
+The work feels lighter,
+the room feels tighter,
+the songs grow quieter,
+my thoughts softer, slighter.
+
+I think I'm missing
+a version of me
+who laughed a bit louder,
+who felt more free.
+Why do we age?
+Turn life to a stage?
+Are we getting wiser —
+or just writing a heavier page?
+
+Look at the moon —
+it's scarred, not immune,
+yet it shines every night
+like it owns the tune.
+
+And suddenly rhyme
+falls into line,
+like even my chaos
+is trying to be fine.</div>
+    <div class="poem-btns reveal rd3">
+      <button class="pbtn" onclick="ep('vii-moon')">the moon thing</button>
+      <button class="pbtn" onclick="ep('vii-chaos')">"even my chaos is trying to be fine"</button>
+      <button class="pbtn" onclick="ep('vii-heavier')">heavier page</button>
+    </div>
+    <div class="expanel" id="vii-moon">
+      <div class="ep-label">the moon</div>
+      <p>every crater is something that hit it. still shines. that's it. that's the whole thing.</p>
+    </div>
+    <div class="expanel" id="vii-chaos">
+      <div class="ep-label">my favourite line in the collection</div>
+      <p>not saying everything's fine. just saying it's trying. that distinction matters more than it sounds.</p>
+    </div>
+    <div class="expanel" id="vii-heavier">
+      <div class="ep-label">heavier page</div>
+      <p>are we getting wiser or just accumulating more weight. I still don't know. asking felt more honest than answering.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="zine-rule">
+
+<!-- FINALE -->
+<section class="finale" id="finale">
+  <div class="finale-ghost" aria-hidden="true">fin</div>
+  <div class="finale-inner reveal">
+    <div class="finale-line">you made it to the end.</div>
+    <div class="finale-line">or you skipped here first —</div>
+    <div class="finale-line">no judgment.</div>
+    <div class="finale-line big red">thanks for reading.</div>
+    <div class="finale-line" style="font-size:1rem;margin-top:0.8rem;color:var(--ink4)">the poems are still in my notes app too, just in case.</div>
+  </div>
+  <div class="finale-credit reveal rd2">
+    wrote this instead &nbsp;·&nbsp; Pulkit Chhabra &nbsp;·&nbsp; 2026
+  </div>
+</section>
+
+<script>
+const dot=document.getElementById('cursor-dot');
+const ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  dot.style.left=mx+'px';dot.style.top=my+'px';
+});
+document.querySelectorAll('a,button,.toc-item').forEach(el=>{
+  el.addEventListener('mouseenter',()=>ring.classList.add('hov'));
+  el.addEventListener('mouseleave',()=>ring.classList.remove('hov'));
+});
+(function anim(){
+  rx+=(mx-rx)*0.1;ry+=(my-ry)*0.1;
+  ring.style.left=rx+'px';ring.style.top=ry+'px';
+  requestAnimationFrame(anim);
+})();
+
+const prog=document.getElementById('progress');
+window.addEventListener('scroll',()=>{
+  prog.style.width=(window.scrollY/(document.body.scrollHeight-window.innerHeight)*100)+'%';
+});
+
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+
+function ep(id){
+  const el=document.getElementById(id);
+  el.style.display=el.style.display==='block'?'none':'block';
+}
+function go(n){
+  document.getElementById('poem-'+n).scrollIntoView({behavior:'smooth',block:'start'});
+}
+</script>
+</body>
+</html>
